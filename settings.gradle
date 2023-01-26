@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'multimodule'
-include('module-api')
+include('module-api','module-common')
