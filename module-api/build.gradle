@@ -1,13 +1,15 @@
 plugins {
-	id 'java'
-  id 'application'
+  id 'multimodule.java-application-convention'
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+  id 'java'
+  id 'eclipse'
+  id 'eclipse-wtp'
 }
 
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+repositories {
+    mavenCentral()
+}
 
 application {
     mainClass = 'dev.be.moduleapi.ModuleApiApplication'
@@ -19,17 +21,16 @@ configurations {
 	}
 }
 
-repositories {
-	mavenCentral()
-}
-
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation project(':module-common')
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
