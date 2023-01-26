@@ -1,0 +1,13 @@
+plugins {
+  id 'multimodule.java-common-convention'
+  id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+// dependencies {
+//   implementation project(':module-api')
+//   implementation project(':module-common')
+// }
