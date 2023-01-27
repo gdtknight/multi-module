@@ -1,36 +1,32 @@
 plugins {
-  id 'multimodule.java-application-convention'
-	id 'org.springframework.boot' version '2.7.5'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-  id 'java'
-  id 'eclipse'
-  id 'eclipse-wtp'
-}
+ 	id 'org.springframework.boot' version '2.7.5'
+ 	id 'io.spring.dependency-management' version '1.1.0'
+ 	id 'application'
+ }
+ 
+ group = 'dev.be'
+ version = '0.0.1-SNAPSHOT'
+ sourceCompatibility = '17'
+ 
+ application {
+   mainClass='dev.be.moduleapi.ModuleApiApplication'
+ }
+ 
+ repositories {
+ 	mavenCentral()
+ }
+ 
+ dependencies {
+   // library 모듈을 사용하기 위해 추가해야 하는 부분이다.
+ 	implementation project(':module-common')
 
-repositories {
-    mavenCentral()
-}
+  compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-application {
-    mainClass = 'dev.be.moduleapi.ModuleApiApplication'
-}
+	testCompileOnly 'org.projectlombok:lombok:1.18.24'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
-dependencies {
-  implementation project(':module-common')
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
-
+ 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+ 	implementation 'org.springframework.boot:spring-boot-starter-web'
+ 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ }

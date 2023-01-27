@@ -1,3 +1,32 @@
 plugins {
-  id 'multimodule.java-library-convention'
-}
+ 	id 'org.springframework.boot' version '2.7.5' apply false
+ 	id 'io.spring.dependency-management' version '1.1.0'
+ 	id 'java-library'
+ }
+ 
+ group = 'dev.be'
+ version = '0.0.1-SNAPSHOT'
+ sourceCompatibility = '17'
+ 
+ repositories {
+ 	mavenCentral()
+ }
+ 
+dependencyManagement {
+	imports {
+		mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+	}
+ }
+
+ dependencies {
+   // library 모듈을 사용하기 위해 추가해야 하는 부분이다.
+  compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+	
+	testCompileOnly 'org.projectlombok:lombok:1.18.24'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+  
+	implementation 'org.springframework.boot:spring-boot-starter'
+ 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ }
+
