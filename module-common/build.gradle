@@ -1,37 +1,49 @@
 plugins {
- 	id 'org.springframework.boot' version '2.7.5' apply false
- 	id 'io.spring.dependency-management' version '1.1.0'
- 	id 'java-library'
- }
- 
- group = 'dev.be'
- version = '0.0.1-SNAPSHOT'
- sourceCompatibility = '17'
- 
- repositories {
- 	mavenCentral()
- }
- 
-dependencyManagement {
-	imports {
-		mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
-	}
- }
+  id 'org.springframework.boot' version '2.7.5' apply false
+  id 'io.spring.dependency-management' version '1.1.0'
+  id 'java-library'
+}
 
- dependencies {
-   // library 모듈을 사용하기 위해 추가해야 하는 부분이다.
+group = 'dev.be'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+  mavenCentral()
+}
+
+dependencyManagement {
+  imports {
+    mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+  }
+}
+
+dependencies {
+  // library 모듈을 사용하기 위해 추가해야 하는 부분이다.
   compileOnly 'org.projectlombok:lombok:1.18.24'
-	annotationProcessor 'org.projectlombok:lombok:1.18.24'
-	
-	testCompileOnly 'org.projectlombok:lombok:1.18.24'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
-  
-	implementation 'org.springframework.boot:spring-boot-starter'
- 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+  testCompileOnly 'org.projectlombok:lombok:1.18.24'
+  testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+  implementation 'org.springframework.boot:spring-boot-starter'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
   // db 연동 부분
   api 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.2'
+}
 
- }
+tasks.named('test') {
+  useJUnitPlatform()
+}
 
+// tasks.bootJar {enabled = false} // xxx.jar => 서버 실행이 가능하다.
+// tasks.jar { enabled = true } // xxx-plain.jar => 서버 실행이 불가능하다.
+
+// ./gradlew clean :module-api:buildNeeded --stacktrace --info --refresh-dependencies -x test
+// 기존 빌드 폴더 정리 후 module-api 빌드
+// stacktrace -> logging 출력
+// loggin level : debug -> info -> warn -> error // info 이상의 내용을 출력해달라
+// refresh-dependencies : dependency 새로고침
+// -x test : 모든 테스트가 실행되지 않더라도 빌드가 되도록 한다. (다른 사람이 짠 테스트 코드가 실패하고 있는 경우)
