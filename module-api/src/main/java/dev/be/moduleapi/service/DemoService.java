@@ -3,6 +3,7 @@ package dev.be.moduleapi.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import dev.be.moduleapi.exception.CustomException;
@@ -15,6 +16,9 @@ import dev.be.modulecommon.service.CommonDemoService;
 public class DemoService {
   private static final Logger logger = LoggerFactory.getLogger(DemoService.class);
 
+  @Value("${profile-name}")
+  private String name;
+
   private final CommonDemoService commonDemoService;
   private final MemberRepository memberRepository;
 
@@ -24,6 +28,7 @@ public class DemoService {
   }
 
   public String save() {
+    logger.info("Current profile-name : {}", name);
     memberRepository.save(Member.builder()
         .name(Thread.currentThread().getName())
         .build());
